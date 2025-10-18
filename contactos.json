@@ -1,0 +1,14 @@
+{
+    "ricardo": {
+        "telefono": 4248586413,
+        "email": "ricardo@email",
+        "categoria": "prueba",
+        "nota": "esto es una prueba"
+    },
+    "mama": {
+        "telefono": 4128405420,
+        "email": "caro@hotmail.com",
+        "categoria": "familia",
+        "nota": "cumplea\u00f1os el 9 de mayo"
+    }
+}

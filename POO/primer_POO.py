@@ -23,3 +23,6 @@ producto3.aplicar_descuento(0.20)
 print(f"producto con descuento: {producto3.precio_producto}\n")
 
 print(producto2.obtener_info())
+
+       
+
