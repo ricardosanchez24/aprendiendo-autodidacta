@@ -1,5 +1,5 @@
 import json
-
+import re
 #paso 0: menu
 #paso 1 : agg usuario
 #paso 2 : modificar usuario
@@ -20,23 +20,28 @@ def cargar_contactos():
         return {}
 
 def guardar_contactos():
-    global contactos
+    global contactos # "global" se utiliza para cambiar el valor del tipo de dato global (diccionario en este caso) solo dentro de esta funcion y no alterar su alor afuera ni para crear una variable en la funcion con ese nombre
     with open("contactos.json", "w") as archivo:
         json.dump(contactos, archivo, indent=4)
 
 def agregar_contactos():
     global contactos
-    nombre = input("ingrese el nombre del contacto: ").strip()
+    nombre = input("ingrese el nombre del contacto: ").strip().lower()
     if not nombre:
         print("agrege un nombre valido")
         return
-    telefono_str = input("ingrese el numero de telefono: ").strip()
     try:
-        telefono = int(telefono_str)
+        telefono = int(input("ingrese el numero de telefono: "))
     except ValueError:
         print("Entrada invalida, ingrese un numero de telefono valido")
         return
     email = input("ingrese su email: ").strip()
+    estructura_correo = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    conincidencia = re.match(estructura_correo,email)
+    if not conincidencia :
+        print("formato de email invalido")
+        return
+    
     categoria = input("ingresa su categoria: ").strip()
     nota = input("ingresa una nota(ejem: cumpleaños x dia): ").strip()
 
@@ -50,7 +55,7 @@ def agregar_contactos():
 
 def modificar_contacto():
     global contactos
-    nombre = input("ingrese el contacto a modificar: ").strip()
+    nombre = input("ingrese el contacto a modificar: ").strip().lower()
     if nombre not in contactos:
         print("el contacto no existe")
         return
@@ -58,7 +63,7 @@ def modificar_contacto():
     # Telefono: permitir dejar vacío para no cambiar
     while True:
         nuevo_telefono_str = input("Ingrese el nuevo número de teléfono. Deje vacío para no cambiar: ").strip()
-        if not nuevo_telefono_str:
+        if not nuevo_telefono_str:# este pedazo de codigo funciona para decirle al programa que si no se lleno el campo entonces deje el valor anterior y que siga con la ejecucion
             break
         try:
             nuevo_telefono = int(nuevo_telefono_str)
@@ -67,8 +72,11 @@ def modificar_contacto():
         except ValueError:
             print("Entrada inválida. Ingrese solo dígitos.")
 
-    nuevo_email = input("ingrese el nuvo email (deje vacío para no cambiar): ").strip()
+    nuevo_email = input("ingrese el nuevo email (deje vacío para no cambiar): ").strip()
     if nuevo_email:
+        if "@" not in nuevo_email and "." not in nuevo_email:
+            print("Error, el email le falta @ o .")
+            return
         contactos[nombre]["email"] = nuevo_email
 
     nueva_categoria = input("ingrese la nueva categoria (deje vacío para no cambiar): ").strip()
@@ -83,7 +91,7 @@ def modificar_contacto():
 
 def eliminar_contacto():
     global contactos
-    eliminar = input("ingrese el contacto a eliminar: ").strip()
+    eliminar = input("ingrese el contacto a eliminar: ").strip().lower()
     if eliminar in contactos:
         del contactos[eliminar]
         print(f"✅ Contacto '{eliminar}' eliminado correctamente.")
@@ -91,9 +99,13 @@ def eliminar_contacto():
         print(f"❌ Error: El contacto '{eliminar}' no se encuentra en la lista.")
 
 def mostrar_usuario():
-    usuario_mostrar = input("ingrese el ususario a mostrar: ").strip()
+    usuario_mostrar = input("ingrese el ususario a mostrar: ").strip().lower()
     if usuario_mostrar in contactos:
-        print(contactos[usuario_mostrar])
+        print(f"el usuario, {usuario_mostrar} tiene los siguientes datos: ")
+        print(f"telefono: {contactos[usuario_mostrar]["telefono"]} " )
+        print(f"email:  {contactos[usuario_mostrar]["email"]}")
+        print(f"categoria: {contactos[usuario_mostrar]["categoria"]}")
+        print(f"nota: {contactos[usuario_mostrar]["nota"]}")
     else:
         print("el usuario no existe")
 
@@ -122,7 +134,7 @@ def ejecutar_programa():
 
     while True:
         mostrar_menu()
-        opcion = input("ingrese una opcion: ").strip()
+        opcion = input("ingrese una opcion: ").strip().lower()
 
         if opcion == "1":
             agregar_contactos()
@@ -143,4 +155,3 @@ def ejecutar_programa():
 
 # Punto de Entrada (Final)
 ejecutar_programa()
-
