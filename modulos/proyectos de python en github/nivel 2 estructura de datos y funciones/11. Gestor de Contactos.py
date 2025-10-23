@@ -9,7 +9,7 @@ import re
 #paso 6 : salir JSON
 # Inicialización
 contactos = {}
-
+estructura_correo = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 # Bloque de Definición de Funciones Operativas
 
 def cargar_contactos():
@@ -26,19 +26,22 @@ def guardar_contactos():
 
 def agregar_contactos():
     global contactos
+
     nombre = input("ingrese el nombre del contacto: ").strip().lower()
     if not nombre:
         print("agrege un nombre valido")
         return
+    
     try:
         telefono = int(input("ingrese el numero de telefono: "))
     except ValueError:
         print("Entrada invalida, ingrese un numero de telefono valido")
         return
+    
     email = input("ingrese su email: ").strip()
-    estructura_correo = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    conincidencia = re.match(estructura_correo,email)
-    if not conincidencia :
+    
+    coincidencia = re.match(estructura_correo,email)
+    if not coincidencia :
         print("formato de email invalido")
         return
     
@@ -73,11 +76,11 @@ def modificar_contacto():
             print("Entrada inválida. Ingrese solo dígitos.")
 
     nuevo_email = input("ingrese el nuevo email (deje vacío para no cambiar): ").strip()
-    if nuevo_email:
-        if "@" not in nuevo_email and "." not in nuevo_email:
-            print("Error, el email le falta @ o .")
-            return
-        contactos[nombre]["email"] = nuevo_email
+    coincidencia = re.match(estructura_correo,nuevo_email)
+    if not coincidencia :
+        print("formato de email invalido")
+        return
+    contactos[nombre]["email"] = nuevo_email
 
     nueva_categoria = input("ingrese la nueva categoria (deje vacío para no cambiar): ").strip()
     if nueva_categoria:
