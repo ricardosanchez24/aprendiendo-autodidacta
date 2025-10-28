@@ -1,3 +1,7 @@
+/* estudiante ricardo sanchez
+ * C.I 31832182
+ */
+
 import java.util.Scanner;
 
 
