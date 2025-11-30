@@ -1,0 +1,23 @@
+{
+    "id_prestamo_siguiente": 3,
+    "prestamos": {
+        "1": {
+            "titulo_libro": "cantares",
+            "nombre_usuario": "ricardo sanchez",
+            "fecha_prestamo": "2025-11-30",
+            "fecha_vencimiento": "2025-12-14",
+            "estado": "DEVUELTO",
+            "multa": 0.0,
+            "fecha_devolucion_real": "2025-11-30"
+        },
+        "2": {
+            "titulo_libro": "cantares",
+            "nombre_usuario": "ricardo sanchez",
+            "fecha_prestamo": "2025-11-30",
+            "fecha_vencimiento": "2025-12-14",
+            "estado": "ACTIVO",
+            "multa": 0.0,
+            "fecha_devolucion_real": null
+        }
+    }
+}
